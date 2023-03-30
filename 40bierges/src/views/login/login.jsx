@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   // ajout de la hotkey 
 
-  keyMap = { SHOW_ALL_HOTKEYS: "shift+a" };
+  keyMap = { SHOW_ALL_HOTKEYS: "shift+w" };
   handlers = { SHOW_ALL_HOTKEYS: event => this.test() };
 
   // redirection 
@@ -108,7 +108,7 @@ class Login extends React.Component {
           <div id="formContent">
             <h2 className="active"> Sign In </h2>
             <h2 className="inactive underlineHover">Sign Up </h2>
-            
+            <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers} />
           <input type="text" name="mail" id="login" value={this.state.mail} onChange={this.handleChange} className="fadeIn second" placeholder="mail"></input>
           <input type="password" name="password" className="fadeIn third" value={this.state.password} onChange={this.handleChange} placeholder="password"></input>
           <button onClick={this.handleConnect}>Se connecter</button>

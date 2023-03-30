@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   // ajout de la hotkey 
 
-  keyMap = { SHOW_ALL_HOTKEYS: "shift+h" };
+  keyMap = { SHOW_ALL_HOTKEYS: "shift+a" };
   handlers = { SHOW_ALL_HOTKEYS: event => this.test() };
 
   // redirection 
@@ -35,7 +35,7 @@ class Login extends React.Component {
   test(){
     axios.post(this.state.url + '/backdoor', { 
     }).then(response => {
-      if (response.status === 200) {
+      if (response.status == 200) {
         let d = new Date();
         d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000));
         let expires = "expires=" + d.toUTCString();
